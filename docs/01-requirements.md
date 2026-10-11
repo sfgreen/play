@@ -2,8 +2,10 @@
 
 Status: **DRAFT, awaiting owner approval.** Date: 2026-10-11.
 
-The governing design is the RAIM prompt the owner supplied. Where the source text was
-illegible, this document lists the gap in §9 rather than guessing.
+The governing design is the RAIM prompt the owner supplied (screenshot plus a text
+transcription). The prompt says to treat "the supplied RAIM research" as the governing
+design, but that research document has **not** been supplied (Q9). Where the source text
+was illegible, this document lists the gap in §9 rather than guessing.
 
 ---
 
@@ -123,6 +125,16 @@ schema-validated state:
   backtests use daily or hourly bars only. It can supply context only, never
   microstructure signals.
 
+### Fair value
+
+- **FV-1** Use a Stoikov-family fair-value estimate (presumably the micro-price; see Q10)
+  as the **prior** until it is validated out of sample. Only replace it when markout
+  evidence shows something better.
+- **FV-2** Primary references:
+  - Avellaneda–Stoikov (2008),
+  - Guéant–Lehalle–Fernandez-Tapia (2013),
+  - Cont–Kukanov–Stoikov (2014), for OFI.
+
 ## 4. Regime engine requirements
 
 - **RE-1** A four-state HMM:
@@ -236,6 +248,8 @@ Each of these must be answered with evidence before any implementation is approv
 | Q6 | "Auto-disabled when cointegration breaks" implies a pairs or stat-arb leg. Is it in scope? | Out of scope for v1 |
 | Q7 | The RV passage ("living parameter …", "… cost of invalidation …") is illegible. | Parameter registry, plus a documented invalidation trigger for each parameter |
 | Q8 | The AgenKit `/agenkit` harness is not installed in this environment. | Run the same gates manually, as docs in this repo |
+| Q9 | Where is "the supplied RAIM research" that the rules call the governing design? It was not attached. | Treat the prompt itself as the governing design |
+| Q10 | "Stoikov stantious prior until validated" is garbled. Does it mean the Stoikov (2018) micro-price as the fair-value prior? | Yes: micro-price prior, mid as a fallback |
 
 ## 10. Next step if approved
 
