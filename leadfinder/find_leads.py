@@ -1,6 +1,6 @@
 """Find local businesses on Google Maps with no real website.
 
-Usage: python find_leads.py "Ocala, FL" out.csv
+Usage: python find_leads.py "Ocala, FL" out.csv ["dentist,chiropractor"]
 The Places API key is added by the environment's network proxy, so none is set here.
 """
 import csv
@@ -41,10 +41,11 @@ def search(query, page_token=None):
         return json.load(r)
 
 
-def main(city, out_path):
+def main(city, out_path, categories=None):
+    categories = categories or CATEGORIES
     state = city.split(",")[-1].strip()
     seen, rows = set(), []
-    for cat in CATEGORIES:
+    for cat in categories:
         token = None
         for _ in range(3):  # the API returns at most 60 results per query
             data = search(f"{cat} in {city}", token)
@@ -84,4 +85,6 @@ def main(city, out_path):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    # Optional third argument: comma-separated categories to search instead of the defaults.
+    cats = sys.argv[3].split(",") if len(sys.argv) > 3 else None
+    main(sys.argv[1], sys.argv[2], cats)
